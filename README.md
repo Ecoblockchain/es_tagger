@@ -30,7 +30,7 @@ Populating the Elasticsearch Index
 First you need to start Logstash and Elasticsearch. To do this run ``run.sh``.
 
 Then you must execute ``redis_stream.py``. This will populate the index.
-Parsing the XML requires a fair bit of memory (around 17 GB when I execute it
+Parsing the XML requires a fair bit of memory (around 20 GB when I execute it
 on my machine.).
 
 Getting Tags
