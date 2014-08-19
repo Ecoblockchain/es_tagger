@@ -89,27 +89,6 @@ def group_similar_words(buckets,
 
 def get_query(like_text):
 
-  #qry = {
-    #'query': {
-      #'more_like_this': {
-        #'fields': ['text'],
-        #'like_text': like_text,
-        #'min_term_freq': 2,
-        #'max_query_terms': 15,
-        #'min_word_length': 3,
-      #}
-    #},
-    #'aggs': {
-      #'my_tags': {
-        #'significant_terms': {
-          #'field': 'text.text_tags',
-          #'size': 20,
-          #'min_doc_count': 3
-        #}
-      #}
-    #}
-  #}
-
   qry = {
     'query': {
       'filtered': {
@@ -192,7 +171,7 @@ def main():
   while True:
 
     print
-    print 'input document:'
+    print 'input document (Control-D to submit):'
     print
 
     try:
