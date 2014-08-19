@@ -171,7 +171,7 @@ def main():
   while True:
 
     print
-    print 'input document (Control-D to submit):'
+    print 'input text (Control-D to submit):'
     print
 
     try:

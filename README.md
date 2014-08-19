@@ -31,7 +31,8 @@ First you need to start Logstash and Elasticsearch. To do this run ``run.sh``.
 
 Then you must execute ``redis_stream.py``. This will populate the index.
 Parsing the XML requires a fair bit of memory (around 20 GB when I execute it
-on my machine.).
+on my machine.). Redis us used as a message queue here so it will take some
+time from ``redis_stream.py`` finishes until ES has index all documents.
 
 Getting Tags
 -----------
