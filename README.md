@@ -35,7 +35,7 @@ on my machine.).
 
 Getting Tags
 -----------
-To get tag suggestions for an arbitrary text you can the start ``get_tags.py``
+To get tag suggestions for an arbitrary text you can then start ``get_tags.py``
 and past the text into the terminal. Use *Control-D* to execute the tag query.
 
 Questions
