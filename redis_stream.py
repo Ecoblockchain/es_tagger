@@ -68,6 +68,7 @@ def main():
   dw = dewiki.from_string
 
   for i,page in enumerate(root.findall('.//page')):
+    ## get a random subsample of the dataset:
     #if random()<0.99:
       #continue
     as_dict = etree_to_dict(page)['page']
@@ -78,12 +79,12 @@ def main():
                      'comment': vividify(as_dict,'revision','comment') }
 
     as_json = json.dumps(reduced_dict)
-    print as_json
-    print
     r.rpush(redis_list, as_json)
 
-    #if not i%10000:
-      #print i,as_json
+    if not i%10000:
+      print i
+      print as_json
+      print
 
 if __name__ == '__main__':
 
