@@ -3,48 +3,7 @@
     "template" : "wiki",
     "settings" : {
       "number_of_shards" : 1,
-      "number_of_replicas": 0,
-      "index" : {
-        "analysis" : {
-          "analyzer" : {
-            "nGram": {
-              "tokenizer": "myNGram",
-              "filter": ["lowercase"]
-            },
-            "nGram_folded": {
-              "tokenizer": "myNGram",
-              "filter": ["lowercase", "asciifolding"]
-            },
-            "my_shingle_analyzer":{
-              "type": "custom",
-              "tokenizer": "standard",
-              "filter" : ["lowercase", "my_shingle_filter"]
-            }
-          },
-          "tokenizer": {
-            "myNGram": {
-              "type": "nGram",
-              "min_gram": 3,
-              "max_gram": 5,
-              "token_chars": [ "letter", "digit" ]
-            },
-            "myEdgeNGram": {
-              "type": "edgeNGram",
-              "min_gram": 3,
-              "max_gram": 5,
-              "token_chars": [ "letter", "digit" ]
-            }
-          },
-          "filter": {
-            "my_shingle_filter": {
-              "type": "shingle",
-              "min_shingle_size":2,
-              "max_shingle_size":2,
-              "output_unigrams": false
-            }
-          }
-        }
-      }
+      "number_of_replicas": 0
     },
     "mappings": {
       "wiki": {
@@ -62,21 +21,9 @@
             "analyzer": "norwegian",
             "norms": { "enabled": true },
             "fields": {
-              "text_nGram": {
-                "type":"string",
-                "analyzer": "nGram"
-              },
-              "text_nGram_folded": {
-                "type":"string",
-                "analyzer": "nGram_folded"
-              },
               "text_tags": {
                 "type":"string",
                 "analyzer": "simple"
-              },
-              "text_shingles": {
-                "type": "string",
-                "analyzer": "my_shingle_analyzer"
               }
             }
           },
