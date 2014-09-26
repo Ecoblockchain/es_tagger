@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json, redis
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 from collections import defaultdict
 import dewiki
 from random import random
@@ -15,7 +15,7 @@ redis_list = settings.redis_list
 
 xml_data = settings.xml_data
 
-namespace = 'http://www.mediawiki.org/xml/export-0.8/'
+namespace = 'http://www.mediawiki.org/xml/export-0.9/'
 
 
 def remove_namespace(doc, namespace):
@@ -58,33 +58,48 @@ def vividify(as_dict, *arg):
 
   return res
 
-def main():
+def fast_iter(context, func, args=[], kwargs={}):
+  # http://www.ibm.com/developerworks/xml/library/x-hiperfparse/
+  # Author: Liza Daly
+  for event, elem in context:
+    func(elem, *args, **kwargs)
+    elem.clear()
+    while elem.getprevious() is not None:
+      del elem.getparent()[0]
+  del context
 
-  r = redis.StrictRedis(host=host, port=port)
-  tree = ET.parse(xml_data)
-  root = tree.getroot()
-  remove_namespace(root,namespace)
+def main():
 
   dw = dewiki.from_string
 
-  for i,page in enumerate(root.findall('.//page')):
-    ## get a random subsample of the dataset:
-    #if random()<0.99:
-      #continue
-    as_dict = etree_to_dict(page)['page']
-    reduced_dict = { 'title': vividify(as_dict,'title'),\
-                     'text': dw(vividify(as_dict,'revision','text','#text')),\
-                     'myid': vividify(as_dict,'id'),\
-                     '@timestamp': vividify(as_dict,'revision','timestamp'),\
-                     'comment': vividify(as_dict,'revision','comment') }
+  r = redis.StrictRedis(host=host, port=port)
+
+  def process_element(elem):
+
+    ns = lambda x: '{'+namespace+'}'+x
+
+    as_dict = etree_to_dict(elem)[ns('page')]
+
+    # im so sorry ...
+    reduced_dict = { 'title': vividify(as_dict,ns('title')),\
+                     'text': dw(vividify(as_dict,ns('revision'),
+                                         ns('text'),'#text')),\
+                     'myid': vividify(as_dict,ns('id')),\
+                     '@timestamp': vividify(as_dict,ns('revision'),\
+                                            ns('timestamp')),\
+                     'comment': vividify(as_dict,ns('revision'),ns('comment')) }
 
     as_json = json.dumps(reduced_dict)
     r.rpush(redis_list, as_json)
 
-    if not i%10000:
-      print i
-      print as_json
-      print
+    print reduced_dict['title']
+
+
+  context=ET.iterparse(xml_data, events=('end',),
+                       tag='{'+namespace+'}page')
+
+  fast_iter(context, process_element)
+
 
 if __name__ == '__main__':
 

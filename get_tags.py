@@ -127,6 +127,31 @@ def get_query(like_text):
 
   return qry
 
+def print_matching_docs(hits):
+
+  for h in hits:
+    source = h['_source']
+    print '{:.2f}\t'.format(h['_score']),source['title']
+
+  return
+
+def print_scores_and_groups(groups,lower_threshold):
+
+  from operator import itemgetter
+
+  groups = reversed(sorted(groups,key=itemgetter(1)))
+
+  for ww,s in groups:
+
+    if s>lower_threshold:
+      print '{:.2f}\t'.format(s),
+      for w in ww:
+        print w,
+
+      print
+
+  return
+
 
 def main():
 
@@ -136,30 +161,6 @@ def main():
   from elasticsearch import Elasticsearch
 
 
-  def print_matching_docs(hits):
-
-    for h in hits:
-      source = h['_source']
-      print '{:.2f}\t'.format(h['_score']),source['title']
-
-    return
-
-  def print_scores_and_groups(groups,lower_threshold):
-
-    from operator import itemgetter
-
-    groups = reversed(sorted(groups,key=itemgetter(1)))
-
-    for ww,s in groups:
-
-      if s>lower_threshold:
-        print '{:.2f}\t'.format(s),
-        for w in ww:
-          print w,
-
-        print
-
-    return
 
 
   index = settings.index
