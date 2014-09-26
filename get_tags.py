@@ -98,7 +98,7 @@ def get_query(like_text):
             'like_text' : like_text,
             'min_term_freq': 2,
             'max_query_terms': 15,
-            'min_word_length': 3,
+            'min_word_length': 4,
           }
         },
         'filter': {
