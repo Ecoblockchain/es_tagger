@@ -26,24 +26,36 @@ This repo uses a number of utilities and resources:
 
 Starting
 -----------
-1. Start the vagrant image
-
+1. Start the vagrant image:
+    ```
     vagrant up
+    ```
 
-2. Get wikipedia data
+2. Ssh into the vagrant box:
+    ```
+    vagrant ssh
+    ```
 
+3. Navigate to
+    ```
+    cd /vagrant
+    ```
+
+4. Get wikipedia data:
+    ```
     ./get_wiki_data.sh
-
-4. Check that the value assigned to ``xml_namespace`` in ``settings.py``
+    ```
+5. Check that the value assigned to ``xml_namespace`` in ``settings.py``
    matches the namespace in ``./wiki_data/wiki.xml``
 
-3. Index the wikipedia data (This is slow. Go get a coffee):
-
+6. Index the wikipedia data (This is slow. Go get a coffee):
+    ```
     ./redis_es_stream.py
-
+    ```
 
 Getting Tags
 -----------
-To get tag suggestions for an arbitrary text you can then start ``tags.py``
-and paste the text into the terminal. Use *Ctrl^D* to execute the tag query.
+To get tag suggestions for an arbitrary text you can then start ``tags.py`` and
+paste the text into the terminal. Use *Ctrl^D* to execute the tag query.
+Sometimes you have to press Ctrl^d twice.
 
