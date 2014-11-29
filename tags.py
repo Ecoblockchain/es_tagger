@@ -11,7 +11,7 @@ def get_query(like_text):
       'filtered': {
         'query' : {
           'more_like_this' : {
-            'fields' : ['text'],
+            'fields' : ['text.tags_ngram'],
             'like_text' : like_text,
             'min_term_freq': 2,
             'max_query_terms': 15,

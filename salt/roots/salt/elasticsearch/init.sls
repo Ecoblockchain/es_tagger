@@ -23,11 +23,11 @@ elasticsearch:
         - enable: True
         - require:
             - pkg: elasticsearch
-            - file: /etc/elasticsearch/templates/wiki_1.json
+            - file: /etc/elasticsearch/elasticsearch.yml
 
-/etc/elasticsearch/templates/wiki_1.json:
+/etc/elasticsearch/elasticsearch.yml:
     file.managed:
-        - source: salt://elasticsearch/wiki_1.json
+        - source: salt://elasticsearch/elasticsearch.yml
         - user: root
         - group: root
         - mode: 644

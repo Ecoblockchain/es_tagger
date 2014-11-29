@@ -3,24 +3,9 @@
 
 from __future__ import print_function
 
-import json, redis
-import lxml.etree as ET
-from collections import defaultdict
-import dewiki
-from random import random
-import settings
-
-
-host = settings.redis_host
-port = settings.redis_port
-redis_list = settings.redis_list
-
-xml_data = settings.xml_data
-
-namespace = 'http://www.mediawiki.org/xml/export-0.9/'
-
 
 def remove_namespace(doc, namespace):
+
   ns = u'{%s}' % namespace
   nsl = len(ns)
   for elem in doc.getiterator():
@@ -29,6 +14,9 @@ def remove_namespace(doc, namespace):
 
 
 def etree_to_dict(t):
+
+  from collections import defaultdict
+
   d = {t.tag: {} if t.attrib else None}
   children = list(t)
   if children:
@@ -72,11 +60,29 @@ def fast_iter(context, func, args=[], kwargs={}):
 
 def main():
 
+  import lxml.etree as ET
+
+  import json, redis
+  import dewiki
+  from random import random
+  import settings
+
+
+  host = settings.redis_host
+  port = settings.redis_port
+  redis_list = settings.redis_list
+
+  xml_data = settings.xml_data
+
   dw = dewiki.from_string
+  namespace = settings.xml_namespace
 
   r = redis.StrictRedis(host=host, port=port)
 
   def process_element(elem):
+
+    if random()>0.01:
+      return
 
     ns = lambda x: '{'+namespace+'}'+x
 

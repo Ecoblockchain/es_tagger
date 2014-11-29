@@ -1,0 +1,94 @@
+{
+  "template" : "wiki",
+  "settings" : {
+    "number_of_shards" : 1,
+    "number_of_replicas": 0
+  },
+  "analysis": {
+    "analyzer": {
+      "myStandard": {
+        "tokenizer": "standard",
+        "filter": ["standard", "norwegian", "lowercase"]
+      },
+      "keyword_folded": {
+        "tokenizer": "keyword",
+        "filter": ["lowercase", "ascifolding"]
+      },
+      "keyword": {
+        "tokenizer": "keyword",
+        "filter": ["lowercase"]
+      },
+      "keyword_nor": {
+        "tokenizer": "keyword",
+        "filter": ["lowercase", "norwegian"]
+      },
+      "nGram": {
+        "tokenizer": "myNGram",
+        "filter": ["lowercase"]
+      },
+      "nGram_folded": {
+        "tokenizer": "myNGram",
+        "filter": ["lowercase", "asciifolding"]
+      }
+    },
+    "tokenizer": {
+      "myNGram": {
+        "type": "nGram",
+        "min_gram": 3,
+        "max_gram": 20,
+        "token_chars": [ "letter", "digit" ]
+      }
+    },
+    "char_filter" : {
+    }
+  }
+},
+  "mappings": {
+    "wiki": {
+      "properties": {
+        "comment": {
+          "type": "string",
+          "analyzer": "keyword"
+        },
+        "myid": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "text": {
+          "type": "string",
+          "analyzer": "norwegian",
+          "norms": { "enabled": false },
+          "fields": {
+            "tags": {
+              "type":"string",
+              "analyzer": "simple"
+            },
+            "tags_nor": {
+              "type":"string",
+              "analyzer": "keyword_nor"
+            },
+            "tags_folded": {
+              "type":"string",
+              "analyzer": "keword_folded"
+            },
+            "tags_ngram": {
+              "type":"string",
+              "analyzer": "myNGram"
+            }
+          }
+        },
+        "title": {
+          "type": "string",
+          "norms": { "enabled": true },
+          "analyzer": "norwegian",
+          "fields": {
+            "title_simple": {
+              "type": "string",
+              "analyzer": "simple"
+            }
+          }
+        }
+      }
+    }
+  }
+}

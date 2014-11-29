@@ -36,17 +36,24 @@ Starting
     vagrant ssh
     ```
 
-3. Navigate to
+3. Navigate to:
     ```
     cd /vagrant
+    ```
+
+4. Put templates:
+    ```
+    ./put_templates.sh
     ```
 
 4. Get wikipedia data:
     ```
     ./get_wiki_data.sh
     ```
-5. Check that the value assigned to ``xml_namespace`` in ``settings.py``
-   matches the namespace in ``./wiki_data/wiki.xml``
+
+5. Ensure that the value of ``xml_namespace`` in ``settings.py`` matches the
+   namespace in ``./wiki_data/wiki.xml``. (It is somehere near the top of the
+   file).
 
 6. Index the wikipedia data (This is slow. Go get a coffee):
     ```
