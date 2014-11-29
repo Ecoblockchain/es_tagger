@@ -1,5 +1,6 @@
 *.*~
 *.swp
 *.pyc
-elasticsearch*/*
-logstash*/*
+.vagrant
+wiki_data
+.ropeproject

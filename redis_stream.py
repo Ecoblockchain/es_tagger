@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import json, redis
 import lxml.etree as ET
 from collections import defaultdict
@@ -81,22 +83,24 @@ def main():
     as_dict = etree_to_dict(elem)[ns('page')]
 
     # im so sorry ...
-    reduced_dict = { 'title': vividify(as_dict,ns('title')),\
+    reduced_dict = { 'title': vividify(as_dict,ns('title')),
                      'text': dw(vividify(as_dict,ns('revision'),
-                                         ns('text'),'#text')),\
-                     'myid': vividify(as_dict,ns('id')),\
-                     '@timestamp': vividify(as_dict,ns('revision'),\
-                                            ns('timestamp')),\
+                                         ns('text'),'#text')),
+                     'myid': vividify(as_dict,ns('id')),
+                     '@timestamp': vividify(as_dict,ns('revision'),
+                                            ns('timestamp')),
                      'comment': vividify(as_dict,ns('revision'),ns('comment')) }
 
     as_json = json.dumps(reduced_dict)
     r.rpush(redis_list, as_json)
 
-    print reduced_dict['title']
+    print(reduced_dict['title'].encode('utf8'))
 
 
-  context=ET.iterparse(xml_data, events=('end',),
-                       tag='{'+namespace+'}page')
+  context=ET.iterparse(xml_data,
+                       events=('end',),
+                       tag='{'+namespace+'}page',
+                       encoding='utf8')
 
   fast_iter(context, process_element)
 

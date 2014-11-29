@@ -8,11 +8,13 @@ redis_list = 'wiki_stream'
 es_port = 9200
 es_host = 'localhost'
 
-xml_data = '/data/nowiki-latest-pages-articles-multistream.xml'
-#xml_data = '/data/test.xml'
+xml_data = './wiki_data/wiki.xml'
 
 index = 'wiki'
 doc_type = 'wiki'
 
-xml_namespace = 'http://www.mediawiki.org/xml/export-0.8/'
+## NOTICE: this variable seems to change quite often. check wiki.xml for the
+## correct version:
+
+xml_namespace = 'http://www.mediawiki.org/xml/export-0.9/'
 
