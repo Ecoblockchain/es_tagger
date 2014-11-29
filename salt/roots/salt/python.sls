@@ -37,5 +37,5 @@ python-dewiki:
 python_path:
   file.append:
     - name: /etc/environment
-    - text: export PYTHONPATH="/vagrant/python_modules/";$PYTHONPATH
+    - text: export PYTHONPATH="/vagrant/python_modules/"
 
