@@ -19,8 +19,8 @@ This repo uses a number of utilities and resources:
  - Logstash (via Vagrant)
  - Python (via Vagrant)
  - Redis (via Vagrant)
- - dewiki (via Vagrant)
- - python-elasticsearch (via Vagrant)
+ - Dewiki (via Vagrant)
+ - Python-elasticsearch (via Vagrant)
  - An XML dump of the Norwegian Wikipedia collection (via ``get_wiki_data.sh``)
 
 
@@ -34,13 +34,16 @@ Starting
 
     ./get_wiki_data.sh
 
-3. Index the wikipedia data (this is slow):
+4. Check that the value assigned to ``xml_namespace`` in ``settings.py``
+   matches the namespace in ``./wiki_data/wiki.xml``
 
-    ./redis_stream.py
+3. Index the wikipedia data (This is slow. Go get a coffee):
+
+    ./redis_es_stream.py
 
 
 Getting Tags
 -----------
-To get tag suggestions for an arbitrary text you can then start ``get_tags.py``
+To get tag suggestions for an arbitrary text you can then start ``tags.py``
 and paste the text into the terminal. Use *Ctrl^D* to execute the tag query.
 
