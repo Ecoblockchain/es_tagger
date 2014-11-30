@@ -13,6 +13,10 @@
           "tokenizer": "standard",
           "filter": ["standard","lowercase","asciifolding"]
         },
+        "myStandard_nor": {
+          "tokenizer": "standard",
+          "filter": ["standard","lowercase","asciifolding","myNorwegian"]
+        },
         "myNGram": {
           "tokenizer": "myNGram",
           "filter": ["lowercase"]
@@ -52,7 +56,19 @@
         "text": {
           "type": "string",
           "analyzer": "simple",
-          "norms": { "enabled": false }
+          "norms": { "enabled": false },
+          "fields": {
+            "myStandard_nor":{
+              "type": "string",
+              "analyzer": "myStandard_nor",
+              "norms": { "enabled": true }
+            },
+            "myNGram_folded":{
+              "type": "string",
+              "analyzer": "myNGram_folded",
+              "norms": { "enabled": true }
+            }
+          }
         },
         "title": {
           "type": "string",
