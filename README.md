@@ -55,7 +55,8 @@ Starting
    namespace in ``./wiki_data/wiki.xml``. (It is somehere near the top of the
    file).
 
-6. Index the wikipedia data (This is slow. Go get a coffee):
+6. Index the wikipedia data (This is slow. Go get a coffee. When you come back
+   it's unlikely to be ready.):
     ```
     ./redis_es_stream.py
     ```

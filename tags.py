@@ -100,7 +100,7 @@ def main():
     if data.strip():
 
       qry = get_query(data)
-      res = es.search(index=index,doc_type=doc_type,body=qry)
+      res = es.search(index=index,doc_type=doc_type,body=qry,timeout=60)
       buckets = res['aggregations']['my_tags']['buckets']
       groups = group_similar_words(buckets,
                                    min_word_length=4,

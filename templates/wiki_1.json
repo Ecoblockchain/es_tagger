@@ -62,11 +62,6 @@
               "type": "string",
               "analyzer": "myStandard_nor",
               "norms": { "enabled": true }
-            },
-            "myNGram_folded":{
-              "type": "string",
-              "analyzer": "myNGram_folded",
-              "norms": { "enabled": true }
             }
           }
         },
