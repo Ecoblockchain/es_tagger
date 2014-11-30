@@ -1,54 +1,49 @@
 {
-  "template" : "wiki",
+  "template" : "wiki*",
   "settings" : {
     "number_of_shards" : 1,
-    "number_of_replicas": 0
-  },
-  "analysis": {
-    "analyzer": {
-      "myStandard": {
-        "tokenizer": "standard",
-        "filter": ["standard", "norwegian", "lowercase"]
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {
+        "myStandard": {
+          "tokenizer": "standard",
+          "filter": ["standard","lowercase"]
+        },
+        "myStandard_folded": {
+          "tokenizer": "standard",
+          "filter": ["standard","lowercase","asciifolding"]
+        },
+        "myNGram": {
+          "tokenizer": "myNGram",
+          "filter": ["lowercase"]
+        },
+        "myNGram_folded": {
+          "tokenizer": "myNGram",
+          "filter": ["lowercase","asciifolding"]
+        }
       },
-      "keyword_folded": {
-        "tokenizer": "keyword",
-        "filter": ["lowercase", "ascifolding"]
+      "tokenizer": {
+        "myNGram": {
+          "type": "nGram",
+          "min_gram": 3,
+          "max_gram": 15,
+          "token_chars": ["letter","digit"]
+        }
       },
-      "keyword": {
-        "tokenizer": "keyword",
-        "filter": ["lowercase"]
-      },
-      "keyword_nor": {
-        "tokenizer": "keyword",
-        "filter": ["lowercase", "norwegian"]
-      },
-      "nGram": {
-        "tokenizer": "myNGram",
-        "filter": ["lowercase"]
-      },
-      "nGram_folded": {
-        "tokenizer": "myNGram",
-        "filter": ["lowercase", "asciifolding"]
+      "filter": {
+        "myNorwegian" : {
+          "type": "stemmer",
+          "name": "norwegian"
+        }
       }
-    },
-    "tokenizer": {
-      "myNGram": {
-        "type": "nGram",
-        "min_gram": 3,
-        "max_gram": 20,
-        "token_chars": [ "letter", "digit" ]
-      }
-    },
-    "char_filter" : {
     }
-  }
-},
+  },
   "mappings": {
     "wiki": {
       "properties": {
         "comment": {
           "type": "string",
-          "analyzer": "keyword"
+          "index": "not_analyzed"
         },
         "myid": {
           "type": "string",
@@ -56,37 +51,13 @@
         },
         "text": {
           "type": "string",
-          "analyzer": "norwegian",
-          "norms": { "enabled": false },
-          "fields": {
-            "tags": {
-              "type":"string",
-              "analyzer": "simple"
-            },
-            "tags_nor": {
-              "type":"string",
-              "analyzer": "keyword_nor"
-            },
-            "tags_folded": {
-              "type":"string",
-              "analyzer": "keword_folded"
-            },
-            "tags_ngram": {
-              "type":"string",
-              "analyzer": "myNGram"
-            }
-          }
+          "analyzer": "simple",
+          "norms": { "enabled": false }
         },
         "title": {
           "type": "string",
-          "norms": { "enabled": true },
-          "analyzer": "norwegian",
-          "fields": {
-            "title_simple": {
-              "type": "string",
-              "analyzer": "simple"
-            }
-          }
+          "analyzer": "simple",
+          "norms": { "enabled": false }
         }
       }
     }

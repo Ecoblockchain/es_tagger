@@ -81,8 +81,8 @@ def main():
 
   def process_element(elem):
 
-    if random()>0.01:
-      return
+    #if random()>0.01:
+      #return
 
     ns = lambda x: '{'+namespace+'}'+x
 

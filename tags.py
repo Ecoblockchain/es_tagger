@@ -9,32 +9,52 @@ def get_query(like_text):
   qry = {
     'query': {
       'filtered': {
-        'query' : {
-          'more_like_this' : {
-            'fields' : ['text.tags_ngram'],
-            'like_text' : like_text,
+        'query': {
+          'more_like_this': {
+            'fields': ['text'],
+            'like_text': like_text,
             'min_term_freq': 2,
             'max_query_terms': 15,
             'min_word_length': 4,
           }
         },
         'filter': {
-          'bool':{
-            'must_not':{
-              'terms' :{
-                'title.title_simple':[
-                  'fil','mal','wikipedia','kategori'
-                ]
+          'bool': {
+            'must_not': [
+              {
+                'term': {
+                  'title': 'fil'
+                }
+              },
+              {
+                'term': {
+                  'title': 'kategorier'
+                }
+              },
+              {
+                'term': {
+                  'title': 'kategori'
+                }
+              },
+              {
+                'term': {
+                  'title': 'mal'
+                }
+              },
+              {
+                'term': {
+                  'title': 'wikipedia'
+                }
               }
-            }
+            ]
           }
         }
       }
     },
-    'aggs' : {
-      'my_tags' : {
-        'significant_terms' : {
-          'field' : 'text.text_tags',
+    'aggs': {
+      'my_tags': {
+        'significant_terms': {
+          'field': 'text',
           'size': 100,
           'min_doc_count': 3
         }
