@@ -59,6 +59,9 @@ Starting
     ```
     ./redis_es_stream.py
     ```
+    You can watch the progress at: ``http://localhost:9200/_cat/indices?v``.
+    There are around 770 000 documents.
+    
 
 Getting Tags
 -----------
