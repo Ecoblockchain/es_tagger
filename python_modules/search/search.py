@@ -5,9 +5,19 @@ def get_tag_query(txt):
   ## contains quite a lot of metadata entries that we don't want included
   ## in the result set
 
+  ## more on more_like_this queries here:
+  ## http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/
+  ##   query-dsl-mlt-query.html
+
+  ## gld, jlh and chi_square are different scoring algorithms:
+
+  ## http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/
+  ##   search-aggregations-bucket-significantterms-aggregation.html
+
   q = {
     'size': 100,
     'from':0,
+    'timeout': 60,
     'fields': [
       'title'
     ],
@@ -61,7 +71,12 @@ def get_tag_query(txt):
           'field': 'text',
           'size': 100,
           'min_doc_count': 3,
-          #'gnd': {}
+          #'gnd': {},
+          'jlh': {},
+          #'chi_square': {},
+          #'mutual_information': {
+            #'include_negatives': True
+          #}
         }
       }
     }
