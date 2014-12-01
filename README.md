@@ -14,13 +14,14 @@ Utilities
 -----------
 This repo uses a number of utilities and resources:
 
- - Vagrant
+ - Vagrant (requires virtualbox)
  - Elasticsearch (installed via Vagrant)
  - Logstash (via Vagrant)
  - Python (via Vagrant)
  - Redis (via Vagrant)
- - Dewiki (via Vagrant)
- - Python-elasticsearch (via Vagrant)
+ - python-redis (via Vagrant)
+ - python-dewiki (via Vagrant)
+ - python-elasticsearch (via Vagrant)
  - An XML dump of the Norwegian Wikipedia collection (via ``get_wiki_data.sh``)
 
 
@@ -68,5 +69,5 @@ Getting Tags
 -----------
 To get tag suggestions for an arbitrary text you can then start ``tags.py`` and
 paste the text into the terminal. Use *Ctrl^D* to execute the tag query.
-Sometimes you have to press Ctrl^d twice.
+Sometimes you have to press *Ctrl^D* twice.
 
