@@ -6,9 +6,8 @@ from __future__ import print_function
 def print_matching_docs(hits):
 
   for h in hits:
-    source = h['_source']
-    score = '{:.2f}\t'.format(h['_score'])
-    print(score,source['title'].encode('utf8'))
+    score = '{:.5f}\t'.format(h['_score'])
+    print(score,h['fields']['title'][0].encode('utf8'))
 
   return
 
@@ -21,8 +20,13 @@ def print_scores_and_groups(groups,lower_threshold):
   for ww,s in groups:
 
     if s>lower_threshold:
-      score = '{:.2f}\t'.format(s)
+      score = '{:.5f}\t'.format(s)
       print(score,' '.join(ww).encode('utf8')),
 
   return
+
+def pretty_json(j):
+  from json import dumps
+
+  print(dumps(j,sort_keys=False,indent=2,separators=(',', ': ')))
 

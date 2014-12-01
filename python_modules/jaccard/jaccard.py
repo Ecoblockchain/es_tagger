@@ -54,7 +54,8 @@ def get_similar_words(all_words,jaccard_threshold,shingle_size):
 def group_similar_words(buckets,
                         min_word_length,
                         jaccard_threshold,
-                        shingle_size):
+                        shingle_size,
+                        normalize_score=True):
 
   all_words = []
   all_words_score = {}
@@ -78,9 +79,14 @@ def group_similar_words(buckets,
     res.append((ww,top_score))
 
   global_top_score = float(global_top_score)
+  if normalize_score:
+    def norm(x): return x/global_top_score
+  else:
+    def norm(x): return x
+
   scaled_res = []
   for ww,s in res:
-    scaled_res.append((ww,s/global_top_score))
+    scaled_res.append((ww,norm(s)))
 
   return scaled_res
 
