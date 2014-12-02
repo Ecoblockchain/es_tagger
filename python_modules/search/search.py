@@ -17,7 +17,6 @@ def get_tag_query(txt):
   q = {
     'size': 100,
     'from':0,
-    'timeout': 60,
     'fields': [
       'title'
     ],
